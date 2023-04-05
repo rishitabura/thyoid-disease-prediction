@@ -1,0 +1,46 @@
+data1 <- read.csv("FinalSmote12.csv")
+
+data1$age <- as.factor(data1$age)
+data1$sex <- as.factor(data1$sex)
+data1$on_thyroxine <- as.factor(data1$on_thyroxine)
+data1$query_on_thyroxine <- as.factor(data1$query_on_thyroxine)
+data1$on_antithyroid_meds <- as.factor(data1$on_antithyroid_meds)
+data1$sick <- as.factor(data1$sick)
+data1$pregnant <- as.factor(data1$pregnant)
+data1$thyroid_surgery <- as.factor(data1$thyroid_surgery)
+data1$I131_treatment <- as.factor(data1$I131_treatment)
+data1$query_hypothyroid <- as.factor(data1$query_hypothyroid)
+data1$query_hyperthyroid <- as.factor(data1$query_hyperthyroid)
+data1$lithium <- as.factor(data1$lithium)
+data1$goitre <- as.factor(data1$goitre)
+data1$tumor <- as.factor(data1$tumor)
+data1$hypopituitary <- as.factor(data1$hypopituitary)
+data1$psych <- as.factor(data1$psych)
+data1$TSH_measured <- as.factor(data1$TSH_measured)
+data1$T3_measured <- as.factor(data1$T3_measured)
+data1$TT4_measured <- as.factor(data1$TT4_measured)
+data1$T4U_measured <- as.factor(data1$T4U_measured)
+data1$FTI_measured <- as.factor(data1$FTI_measured)
+data1$TBG_measured <- as.factor(data1$TBG_measured)
+data1$referral_source <- as.factor(data1$referral_source)
+data1$target <- as.numeric(data1$target)
+data1$patient_id <- as.numeric(data1$patient_id)
+
+str(data1)
+
+data1 <- as.data.frame(data1)
+data1[data1 == ""] = NA
+
+head(data1)
+View(data1)
+summary(data1)
+library(missForest)
+data1.imp <- missForest(data1)
+
+head(data1.imp)
+data1.mis <- prodNA(data1, noNA = 0.2)
+mixError(data1.imp$ximp, data1.mis, data1.imp$ximp)
+View(data1.mis)
+write.csv(data1.imp$ximp, "missForest2.csv")
+
+
